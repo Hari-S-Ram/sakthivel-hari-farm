@@ -5,18 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Coconut Seedlings | Sakthivel Hari Farm</title>
-
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="nav">
-    Sakthivel Hari Farm
-</div>
+<div class="nav">Sakthivel Hari Farm</div>
 
-<!-- HERO -->
 <div class="hero">
 
     <h1>High Yield Coconut Seedlings</h1>
@@ -30,16 +25,13 @@
         <button class="btn btn-green">💬 WhatsApp</button>
     </a>
 
-    <!-- QUICK LINKS -->
     <div class="quick-links">
         <a href="#varieties">🌴 Varieties</a> |
         <a href="#order">🛒 Order</a> |
         <a href="#location">📍 Location</a>
     </div>
 
-    <!-- SCROLL INDICATOR -->
     <div class="scroll-down">⬇</div>
-
 </div>
 
 <!-- VARIETIES -->
@@ -92,20 +84,22 @@
     <h2>Place Your Order</h2>
 
     <form onsubmit="sendToWhatsApp(event)">
-        <input type="text" id="name" placeholder="Name" required>
 
         <select id="variety" required>
-    <option value="" disabled selected>Select Variety</option>
-    <option value="Dwarf">Dwarf</option>
-    <option value="Tall">Tall</option>
-    <option value="Hybrid">Hybrid</option>
-         </select>
+            <option value="" disabled selected>Select Variety</option>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Tall">Tall</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
 
+        <input type="text" id="name" placeholder="Name" required>
         <input type="tel" id="phone" placeholder="Phone" required>
         <input type="number" id="qty" placeholder="Quantity" required>
-        <textarea id="msg" placeholder="Your Location"></textarea>
 
-        <button class="btn btn-green" type="submit">Submit</button>
+        <textarea id="location" placeholder="Enter your delivery location" required></textarea>
+
+        <button class="btn btn-green" type="submit">Place Order</button>
+
     </form>
 </div>
 
@@ -121,12 +115,10 @@
     </iframe>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
     📞 9360421569 | Sakthivel Hari Farm
 </div>
 
-<!-- FLOATING -->
 <a href="https://wa.me/919360421569?text=Hi%2C%20I%20have%20a%20question"
    class="floating-btn">💬</a>
 
