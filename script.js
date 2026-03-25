@@ -6,49 +6,36 @@ function toggleCard(card) {
 }
 
 function calculatePrice() {
-    let variety = document.getElementById("variety").value;
-    let qty = document.getElementById("qty").value;
+    let v = document.getElementById("variety").value;
+    let q = document.getElementById("qty").value;
 
-    let price = 0;
+    let p = 0;
 
-    if (variety === "Dwarf") price = 150;
-    else if (variety === "Tall") price = 120;
-    else if (variety === "Hybrid") price = 180;
+    if (v === "Dwarf") p = 150;
+    else if (v === "Tall") p = 120;
+    else if (v === "Hybrid") p = 180;
 
     document.getElementById("price").value =
-        (variety && qty) ? "₹ " + (price * qty) : "";
+        (v && q) ? "₹ " + (p * q) : "";
 }
 
 function sendToWhatsApp(e){
     e.preventDefault();
 
-    let name = document.getElementById("name").value;
-    let variety = document.getElementById("variety").value;
     let phone = document.getElementById("phone").value;
     let qty = document.getElementById("qty").value;
-    let price = document.getElementById("price").value;
-    let location = document.getElementById("location").value;
 
     if (phone.length !== 10 || isNaN(phone)) {
-        alert("Invalid phone number");
+        alert("Invalid phone");
         return;
     }
 
     if (qty < 5 || qty > 500) {
-        alert("Order must be between 5 and 500 seedlings");
+        alert("Order must be between 5 and 500");
         return;
     }
 
     if (!confirm("Confirm order?")) return;
 
-    let text =
-        "🌴 Coconut Seedling Order\n\n" +
-        "Name: " + name +
-        "\nVariety: " + variety +
-        "\nPhone: " + phone +
-        "\nQuantity: " + qty +
-        "\nTotal Price: " + price +
-        "\nLocation: " + location;
-
-    window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
+    window.open("https://wa.me/919360421569");
 }
