@@ -10,7 +10,10 @@ function sendToWhatsApp(e){
     let qty = document.getElementById("qty").value;
     let msg = document.getElementById("msg").value;
 
-    let text = `Name:${name}%0APhone:${phone}%0AQty:${qty}%0AMessage:${msg}`;
+    // SAFE improvement: encoding message properly
+    let text = "Name: " + name + "\nPhone: " + phone + "\nQuantity: " + qty + "\nMessage: " + msg;
 
-    window.open("https://wa.me/919360421569?text="+text);
-} 
+    let url = "https://wa.me/919360421569?text=" + encodeURIComponent(text);
+
+    window.open(url, "_blank");
+}
