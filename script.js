@@ -37,51 +37,57 @@ function sendToWhatsApp(e){
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
 
-    // REMOVE SPACES
+    // 🔥 BLOCK OWNER NAME
+    let cleanedName = name.toLowerCase().trim();
+    if (cleanedName === "harisivaram") {
+        alert("Don't enter owner's name");
+        return;
+    }
+
+    // 🔥 REMOVE SPACES FROM PHONE
     let cleanedPhone = phone.replace(/\s+/g, "");
 
-    // BLOCK OWNER NUMBER
+    // 🔥 BLOCK OWNER NUMBER
     if (cleanedPhone === "9360421569") {
         alert("Don't enter owner's mobile number");
         return;
     }
 
-    // VALID NUMBER FORMAT (10 digits)
+    // 🔥 PHONE VALIDATION
     if (cleanedPhone.length !== 10 || isNaN(cleanedPhone)) {
         alert("Enter valid 10-digit phone number");
         return;
     }
 
-    // STARTING DIGIT CHECK (India rule)
+    // 🔥 START DIGIT CHECK
     if (!["9","8","7","6"].includes(cleanedPhone[0])) {
         alert("Enter valid mobile number starting with 9, 8, 7, or 6");
         return;
     }
 
-    // MIN QUANTITY
+    // 🔥 MIN QUANTITY
     if (qty < 5) {
         alert("Minimum order is 5 seedlings");
         return;
     }
 
-    // MAX QUANTITY
+    // 🔥 MAX QUANTITY
     if (qty > 500) {
         alert("Maximum order is 500 seedlings");
         return;
     }
 
-    // CONFIRMATION
+    // 🔥 CONFIRMATION
     if (!confirm("Are you sure you want to place this order?")) {
         return;
     }
 
-    // EXTRA SAFETY
+    // 🔥 EXTRA SAFETY
     if (!price) {
         alert("Please select variety and quantity");
         return;
     }
 
-    // MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
