@@ -41,11 +41,9 @@
 
     <div class="cards">
 
-        <!-- DWARF -->
         <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="dwarf.jpg">
-
                 <div class="overlay">
                     <h3>Dwarf</h3>
                     <p>Lifespan: 80–100/year</p>
@@ -56,11 +54,9 @@
             <div class="card-hint">Tap to view details</div>
         </div>
 
-        <!-- TALL -->
         <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="tall.jpg">
-
                 <div class="overlay">
                     <h3>Tall</h3>
                     <p>Lifespan: 60–80/year</p>
@@ -71,11 +67,9 @@
             <div class="card-hint">Tap to view details</div>
         </div>
 
-        <!-- HYBRID -->
         <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="hybrid.jpg">
-
                 <div class="overlay">
                     <h3>Hybrid</h3>
                     <p>Lifespan: 100–120/year</p>
@@ -94,7 +88,8 @@
     <h2>Place Your Order</h2>
 
     <form onsubmit="sendToWhatsApp(event)">
-        <select id="variety" required>
+
+        <select id="variety" required onchange="calculatePrice()">
             <option value="" disabled selected>Select Variety</option>
             <option value="Dwarf">Dwarf</option>
             <option value="Tall">Tall</option>
@@ -103,11 +98,16 @@
 
         <input type="text" id="name" placeholder="Name" required>
         <input type="tel" id="phone" placeholder="Phone" required>
-        <input type="number" id="qty" placeholder="Quantity" required>
+
+        <input type="number" id="qty" placeholder="Quantity" required oninput="calculatePrice()">
+
+        <!-- PRICE FIELD -->
+        <input type="text" id="price" placeholder="Total Price" readonly>
 
         <textarea id="location" placeholder="Enter your delivery location" required></textarea>
 
         <button class="btn btn-green" type="submit">Place Order</button>
+
     </form>
 </div>
 
