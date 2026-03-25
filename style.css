@@ -12,7 +12,6 @@ body {
     background:white;
 }
 
-/* HERO FIXED */
 .hero {
     min-height:65vh;
     position:relative;
@@ -27,15 +26,6 @@ body {
     padding:20px;
 }
 
-.hero h1 {
-    font-size:32px;
-}
-
-.hero p {
-    margin-bottom:15px;
-}
-
-/* BUTTONS */
 .btn {
     padding:12px 20px;
     margin:6px;
@@ -47,7 +37,6 @@ body {
 .btn-blue { background:#007bff; }
 .btn-green { background:#25D366; }
 
-/* QUICK LINKS */
 .quick-links {
     margin-top:15px;
 }
@@ -58,7 +47,6 @@ body {
     margin:0 5px;
 }
 
-/* SCROLL INDICATOR */
 .scroll-down {
     position:absolute;
     bottom:10px;
@@ -71,13 +59,11 @@ body {
     50% { transform:translateY(10px); }
 }
 
-/* SECTIONS */
 .section {
     padding:40px 20px;
     text-align:center;
 }
 
-/* CARDS */
 .cards {
     display:flex;
     flex-wrap:wrap;
@@ -101,7 +87,6 @@ body {
     object-fit:cover;
 }
 
-/* OVERLAY FIX */
 .overlay {
     position:absolute;
     top:0;
@@ -123,21 +108,18 @@ body {
     opacity:1;
 }
 
-/* FORM */
 input, textarea, select {
     width:100%;
     padding:10px;
     margin:6px 0;
 }
 
-/* FOOTER */
 .footer {
     background:#2e7d32;
     color:white;
     padding:20px;
 }
 
-/* FLOAT */
 .floating-btn {
     position:fixed;
     bottom:20px;
