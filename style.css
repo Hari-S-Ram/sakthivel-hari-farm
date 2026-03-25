@@ -28,7 +28,15 @@ body {
     padding:20px;
 }
 
-/* BUTTONS */
+.hero h1 {
+    font-size:32px;
+}
+
+.hero p {
+    margin-bottom:15px;
+}
+
+/* 🔥 BUTTONS FIXED */
 .btn {
     padding:12px 20px;
     margin:6px;
@@ -36,20 +44,41 @@ body {
     border-radius:6px;
     color:white;
     font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-/* LINKS */
+.btn-blue {
+    background:#007bff;
+}
+
+.btn-green {
+    background:#25D366;
+}
+
+/* HOVER EFFECT FOR BUTTONS */
+.btn:hover {
+    transform:scale(1.05);
+    opacity:0.9;
+}
+
+/* QUICK LINKS */
+.quick-links {
+    margin-top:15px;
+}
+
 .quick-links a {
     color:white;
     text-decoration:none;
     margin:0 5px;
 }
 
-/* SCROLL */
+/* 🔥 BIG SCROLL ARROW */
 .scroll-down {
     position:absolute;
     bottom:15px;
     font-size:32px;
+    font-weight:bold;
     animation:bounce 1.5s infinite;
 }
 
@@ -64,7 +93,7 @@ body {
     text-align:center;
 }
 
-/* HINT */
+/* HINT TEXT */
 .hint-text {
     font-size:15px;
     color:#2e7d32;
@@ -133,13 +162,13 @@ body {
     transition:all 0.4s ease;
 }
 
-/* 🔥 HOVER EFFECT (LAPTOP) */
+/* 🔥 HOVER (LAPTOP) */
 .card:hover .overlay {
     opacity:1;
     transform:scale(1);
 }
 
-/* 🔥 CLICK EFFECT (MOBILE) */
+/* 🔥 CLICK (MOBILE) */
 .card.active .overlay {
     opacity:1;
     transform:scale(1);
@@ -179,7 +208,7 @@ input, textarea, select {
     padding:20px;
 }
 
-/* FLOAT */
+/* FLOAT BUTTON */
 .floating-btn {
     position:fixed;
     bottom:20px;
@@ -188,4 +217,5 @@ input, textarea, select {
     padding:15px;
     border-radius:50%;
     color:white;
-}
+    font-size:20px;
+        }
