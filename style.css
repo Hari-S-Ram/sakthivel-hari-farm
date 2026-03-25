@@ -12,6 +12,7 @@ body {
     background:white;
 }
 
+/* HERO */
 .hero {
     min-height:65vh;
     position:relative;
@@ -26,17 +27,28 @@ body {
     padding:20px;
 }
 
+.hero h1 {
+    font-size:32px;
+}
+
+.hero p {
+    margin-bottom:15px;
+}
+
+/* BUTTONS */
 .btn {
     padding:12px 20px;
     margin:6px;
     border:none;
     border-radius:6px;
     color:white;
+    cursor:pointer;
 }
 
 .btn-blue { background:#007bff; }
 .btn-green { background:#25D366; }
 
+/* QUICK LINKS */
 .quick-links {
     margin-top:15px;
 }
@@ -47,6 +59,7 @@ body {
     margin:0 5px;
 }
 
+/* SCROLL INDICATOR */
 .scroll-down {
     position:absolute;
     bottom:10px;
@@ -59,11 +72,13 @@ body {
     50% { transform:translateY(10px); }
 }
 
+/* SECTIONS */
 .section {
     padding:40px 20px;
     text-align:center;
 }
 
+/* CARDS */
 .cards {
     display:flex;
     flex-wrap:wrap;
@@ -87,39 +102,66 @@ body {
     object-fit:cover;
 }
 
+/* ✅ FIXED OVERLAY */
 .overlay {
     position:absolute;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.8);
+    
+    background:rgba(0,0,0,0.75);
     color:white;
+
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
+
+    /* 🔥 CENTER EVERYTHING */
+    justify-content:center;
     align-items:center;
-    padding:20px;
+
+    text-align:center;
+    padding:15px;
+
+    /* 🔥 PREVENT CUT */
+    overflow-y:auto;
+
     opacity:0;
-    transition:0.4s;
+    transition:0.3s;
 }
 
+/* SPACE BETWEEN TEXT */
+.overlay h3 {
+    margin-bottom:8px;
+}
+
+.overlay p {
+    margin:4px 0;
+}
+
+/* SHOW ON CLICK */
 .card.active .overlay {
     opacity:1;
 }
 
+/* FORM */
 input, textarea, select {
     width:100%;
     padding:10px;
     margin:6px 0;
+    border-radius:5px;
+    border:1px solid #ccc;
 }
 
+/* FOOTER */
 .footer {
     background:#2e7d32;
     color:white;
     padding:20px;
+    text-align:center;
 }
 
+/* FLOAT BUTTON */
 .floating-btn {
     position:fixed;
     bottom:20px;
@@ -128,4 +170,6 @@ input, textarea, select {
     padding:15px;
     border-radius:50%;
     color:white;
+    text-decoration:none;
+    font-size:20px;
 }
