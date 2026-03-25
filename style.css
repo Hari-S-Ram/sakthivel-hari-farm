@@ -27,26 +27,26 @@ body {
     padding:20px;
 }
 
-.hero h1 {
-    font-size:32px;
-}
-
-.hero p {
-    margin-bottom:15px;
-}
+.hero h1 { font-size:32px; }
+.hero p { margin-bottom:15px; }
 
 /* BUTTONS */
 .btn {
     padding:12px 20px;
     margin:6px;
     border:none;
-    border-radius:6px;
+    border-radius:8px;
     color:white;
     cursor:pointer;
+    transition:0.3s;
 }
 
 .btn-blue { background:#007bff; }
 .btn-green { background:#25D366; }
+
+.btn:hover {
+    transform:scale(1.05);
+}
 
 /* QUICK LINKS */
 .quick-links {
@@ -59,7 +59,7 @@ body {
     margin:0 5px;
 }
 
-/* SCROLL INDICATOR */
+/* SCROLL */
 .scroll-down {
     position:absolute;
     bottom:10px;
@@ -88,60 +88,78 @@ body {
 
 .card {
     width:260px;
+    cursor:pointer;
 }
 
+/* IMAGE CONTAINER */
 .card-img {
     position:relative;
     overflow:hidden;
     border-radius:15px;
 }
 
+/* IMAGE EFFECT */
 .card-img img {
     width:100%;
     height:200px;
     object-fit:cover;
+    transition:0.5s;
 }
 
-/* ✅ FIXED OVERLAY */
+/* OVERLAY (PERFECT CENTER + EFFECT) */
 .overlay {
     position:absolute;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    
-    background:rgba(0,0,0,0.75);
+
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(4px); /* 🔥 PREMIUM LOOK */
+
     color:white;
 
     display:flex;
     flex-direction:column;
-
-    /* 🔥 CENTER EVERYTHING */
     justify-content:center;
     align-items:center;
 
     text-align:center;
     padding:15px;
 
-    /* 🔥 PREVENT CUT */
-    overflow-y:auto;
-
     opacity:0;
-    transition:0.3s;
+    transform:scale(0.9); /* 🔥 START SMALL */
+    transition:all 0.4s ease;
 }
 
-/* SPACE BETWEEN TEXT */
+/* TEXT STYLING */
 .overlay h3 {
     margin-bottom:8px;
+    font-size:20px;
 }
 
 .overlay p {
     margin:4px 0;
+    font-size:14px;
 }
 
-/* SHOW ON CLICK */
+/* PRICE HIGHLIGHT */
+.overlay p:last-child {
+    font-weight:bold;
+    color:#ffd54f;
+    font-size:16px;
+}
+
+/* ACTIVE STATE */
 .card.active .overlay {
     opacity:1;
+    transform:scale(1); /* 🔥 ZOOM IN */
+}
+
+/* IMAGE ZOOM OUT */
+.card.active img {
+    transform:scale(1.1);
+    filter:brightness(0.6);
 }
 
 /* FORM */
@@ -149,7 +167,7 @@ input, textarea, select {
     width:100%;
     padding:10px;
     margin:6px 0;
-    border-radius:5px;
+    border-radius:6px;
     border:1px solid #ccc;
 }
 
