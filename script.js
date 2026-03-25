@@ -1,4 +1,4 @@
-/* CARD TOGGLE */
+/* CARD */
 function toggleCard(card) {
     document.querySelectorAll(".card").forEach(c => {
         if (c !== card) c.classList.remove("active");
@@ -6,62 +6,46 @@ function toggleCard(card) {
     card.classList.toggle("active");
 }
 
-/* PRICE CALCULATION */
+/* PRICE */
 function calculatePrice() {
     let variety = document.getElementById("variety").value;
     let qty = document.getElementById("qty").value;
 
-    let pricePerUnit = 0;
+    let price = 0;
 
-    if (variety === "Dwarf") pricePerUnit = 150;
-    else if (variety === "Tall") pricePerUnit = 120;
-    else if (variety === "Hybrid") pricePerUnit = 180;
+    if (variety === "Dwarf") price = 150;
+    else if (variety === "Tall") price = 120;
+    else if (variety === "Hybrid") price = 180;
 
-    let total = pricePerUnit * qty;
-
-    if (variety && qty > 0) {
-        document.getElementById("price").value = "₹ " + total;
-    } else {
-        document.getElementById("price").value = "";
-    }
+    document.getElementById("price").value =
+        (qty && variety) ? "₹ " + (price * qty) : "";
 }
 
-/* WHATSAPP SUBMIT WITH PROTECTION */
+/* ORDER */
 function sendToWhatsApp(e){
     e.preventDefault();
 
-    let name = document.getElementById("name").value.trim();
+    let name = document.getElementById("name").value;
     let variety = document.getElementById("variety").value;
-    let phone = document.getElementById("phone").value.trim();
+    let phone = document.getElementById("phone").value;
     let qty = document.getElementById("qty").value;
     let price = document.getElementById("price").value;
-    let location = document.getElementById("location").value.trim();
+    let location = document.getElementById("location").value;
 
-    /* 🔥 1. PHONE VALIDATION */
     if (phone.length !== 10 || isNaN(phone)) {
-        alert("Enter valid 10-digit phone number");
+        alert("Invalid phone number");
         return;
     }
 
-    /* 🔥 2. MINIMUM QUANTITY */
     if (qty < 5) {
-        alert("Minimum order is 5 seedlings");
+        alert("Minimum order is 5");
         return;
     }
 
-    /* 🔥 3. CONFIRMATION POPUP */
-    if (!confirm("Are you sure you want to place this order?")) {
-        return;
-    }
-
-    /* EXTRA SAFETY */
-    if (!price) {
-        alert("Please select variety and quantity");
-        return;
-    }
+    if (!confirm("Confirm order?")) return;
 
     let text =
-        "🌴 Coconut Seedling Order\n\n" +
+        "🌴 Coconut Order\n\n" +
         "Name: " + name +
         "\nVariety: " + variety +
         "\nPhone: " + phone +
@@ -71,3 +55,21 @@ function sendToWhatsApp(e){
 
     window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
 }
+
+/* HERO CAROUSEL (4 IMAGES ONLY) */
+const images = [
+    "farm.jpg",
+    "farm1.jpg",
+    "farm2.jpg",
+    "farm3.jpg"
+];
+
+let i = 0;
+
+setInterval(() => {
+    i = (i + 1) % images.length;
+
+    document.querySelector(".hero").style.background =
+        `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('${images[i]}') center/cover`;
+}, 4000);
