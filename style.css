@@ -4,7 +4,6 @@ body {
     background:#f5f5f5;
 }
 
-/* NAV */
 .nav {
     padding:15px;
     text-align:center;
@@ -17,7 +16,7 @@ body {
 .hero {
     min-height:65vh;
     position:relative;
-    background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url('farm.jpg') center/cover;
     color:white;
     display:flex;
@@ -25,66 +24,38 @@ body {
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:20px;
 }
 
 .hero h1 {
     font-size:32px;
 }
 
-.hero p {
-    margin-bottom:15px;
-}
-
-/* 🔥 BUTTONS FIXED */
 .btn {
     padding:12px 20px;
     margin:6px;
     border:none;
     border-radius:6px;
     color:white;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
 }
 
-.btn-blue {
-    background:#007bff;
-}
-
-.btn-green {
-    background:#25D366;
-}
-
-/* HOVER EFFECT FOR BUTTONS */
-.btn:hover {
-    transform:scale(1.05);
-    opacity:0.9;
-}
-
-/* QUICK LINKS */
-.quick-links {
-    margin-top:15px;
-}
+.btn-blue { background:#007bff; }
+.btn-green { background:#25D366; }
 
 .quick-links a {
     color:white;
     text-decoration:none;
-    margin:0 5px;
 }
 
-/* 🔥 BIG SCROLL ARROW */
 .scroll-down {
     position:absolute;
     bottom:15px;
-    font-size:32px;
-    font-weight:bold;
+    font-size:30px;
     animation:bounce 1.5s infinite;
 }
 
 @keyframes bounce {
     0%,100% { transform:translateY(0); }
-    50% { transform:translateY(15px); }
+    50% { transform:translateY(12px); }
 }
 
 /* SECTION */
@@ -93,11 +64,9 @@ body {
     text-align:center;
 }
 
-/* HINT TEXT */
-.hint-text {
-    font-size:15px;
-    color:#2e7d32;
-    margin-bottom:20px;
+.section-hint {
+    font-size:14px;
+    color:#777;
 }
 
 /* CARDS */
@@ -111,14 +80,13 @@ body {
 .card {
     width:260px;
     cursor:pointer;
-    transition:transform 0.3s;
+    transition:0.3s;
 }
 
 .card:hover {
-    transform:translateY(-5px);
+    transform:scale(1.05);
 }
 
-/* IMAGE */
 .card-img {
     position:relative;
     overflow:hidden;
@@ -129,7 +97,19 @@ body {
     width:100%;
     height:200px;
     object-fit:cover;
-    transition:0.4s ease;
+}
+
+/* TAP LABEL */
+.card-img::after {
+    content:"Tap to view";
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    font-size:12px;
+    padding:5px 8px;
+    border-radius:6px;
 }
 
 /* OVERLAY */
@@ -139,46 +119,19 @@ body {
     left:0;
     width:100%;
     height:100%;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.9),
-        rgba(0,0,0,0.75),
-        rgba(0,0,0,0.9)
-    );
-
+    background:linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
     color:white;
-
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-
     text-align:center;
-    padding:20px;
-
     opacity:0;
-    transform:scale(0.9);
-    transition:all 0.4s ease;
+    transition:0.4s;
 }
 
-/* 🔥 HOVER (LAPTOP) */
-.card:hover .overlay {
-    opacity:1;
-    transform:scale(1);
-}
-
-/* 🔥 CLICK (MOBILE) */
 .card.active .overlay {
     opacity:1;
-    transform:scale(1);
-}
-
-/* IMAGE ZOOM */
-.card:hover img,
-.card.active img {
-    transform:scale(1.1);
-    filter:brightness(0.6);
 }
 
 /* TEXT */
@@ -188,17 +141,21 @@ body {
 }
 
 .overlay p {
-    font-size:16px;
-    margin:4px 0;
+    margin:5px 0;
+}
+
+/* HINT */
+.card-hint {
+    font-size:13px;
+    color:#888;
+    margin-top:8px;
 }
 
 /* FORM */
 input, textarea, select {
     width:100%;
-    padding:12px;
+    padding:10px;
     margin:6px 0;
-    border-radius:6px;
-    border:1px solid #ccc;
 }
 
 /* FOOTER */
@@ -217,5 +174,4 @@ input, textarea, select {
     padding:15px;
     border-radius:50%;
     color:white;
-    font-size:20px;
-        }
+}
