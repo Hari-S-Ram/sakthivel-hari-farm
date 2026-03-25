@@ -1,7 +1,22 @@
-function toggleCard(card) {
-    card.classList.toggle("active");
+let selectedVariety = "";
+
+// STORE selection only
+function selectVariety(variety) {
+    selectedVariety = variety;
 }
 
+// WHEN USER CLICKS DROPDOWN → apply selection
+document.addEventListener("DOMContentLoaded", function () {
+    const dropdown = document.getElementById("variety");
+
+    dropdown.addEventListener("focus", function () {
+        if (selectedVariety !== "") {
+            dropdown.value = selectedVariety;
+        }
+    });
+});
+
+// WHATSAPP
 function sendToWhatsApp(e){
     e.preventDefault();
 
@@ -9,14 +24,15 @@ function sendToWhatsApp(e){
     let variety = document.getElementById("variety").value;
     let phone = document.getElementById("phone").value;
     let qty = document.getElementById("qty").value;
-    let msg = document.getElementById("msg").value;
+    let location = document.getElementById("location").value;
 
     let text =
-        "Name: " + name +
-        "\nVariety: " + variety +
-        "\nPhone: " + phone +
+        "Hi, I want to order coconut seedlings.\n\n" +
+        "Variety: " + variety +
         "\nQuantity: " + qty +
-        "\nMessage: " + msg;
+        "\nLocation: " + location +
+        "\nName: " + name +
+        "\nPhone: " + phone;
 
     window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
 }
