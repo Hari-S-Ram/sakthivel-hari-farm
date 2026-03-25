@@ -1,36 +1,62 @@
-function toggleCard(card){
+/* 🔥 CARD TOGGLE (SMART) */
+function toggleCard(card) {
+
+    // Close other cards (clean UX)
+    document.querySelectorAll(".card").forEach(c => {
+        if (c !== card) c.classList.remove("active");
+    });
+
+    // Toggle clicked card
     card.classList.toggle("active");
 }
 
-function calculatePrice(){
-    let v=variety.value;
-    let q=qty.value;
+/* 🔥 PRICE CALCULATION */
+function calculatePrice() {
 
-    let p=0;
+    let variety = document.getElementById("variety").value;
+    let qty = document.getElementById("qty").value;
 
-    if(v==="Dwarf") p=150;
-    else if(v==="Tall") p=120;
-    else if(v==="Hybrid") p=180;
+    let pricePerUnit = 0;
 
-    price.value=(v&&q)? "₹ "+(p*q):"";
+    if (variety === "Dwarf") pricePerUnit = 150;
+    else if (variety === "Tall") pricePerUnit = 120;
+    else if (variety === "Hybrid") pricePerUnit = 180;
+
+    let total = pricePerUnit * qty;
+
+    // Show price only when both are selected
+    if (variety && qty > 0) {
+        document.getElementById("price").value = "₹ " + total;
+    } else {
+        document.getElementById("price").value = "";
+    }
 }
 
+/* 🔥 WHATSAPP SUBMIT */
 function sendToWhatsApp(e){
     e.preventDefault();
 
-    if(phone.value.length!=10){ alert("Invalid phone"); return; }
-    if(qty.value<5){ alert("Min 5"); return; }
-    if(!confirm("Confirm?")) return;
+    let name = document.getElementById("name").value;
+    let variety = document.getElementById("variety").value;
+    let phone = document.getElementById("phone").value;
+    let qty = document.getElementById("qty").value;
+    let price = document.getElementById("price").value;
+    let location = document.getElementById("location").value;
 
-    window.open("https://wa.me/919360421569");
+    // Basic validation (don’t allow empty price)
+    if (!price) {
+        alert("Please select variety and quantity to calculate price.");
+        return;
+    }
+
+    let text =
+        "🌴 Coconut Seedling Order\n\n" +
+        "Name: " + name +
+        "\nVariety: " + variety +
+        "\nPhone: " + phone +
+        "\nQuantity: " + qty +
+        "\nTotal Price: " + price +
+        "\nLocation: " + location;
+
+    window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
 }
-
-/* CAROUSEL */
-const imgs=["farm.jpg","farm1.jpg","farm2.jpg","farm3.jpg"];
-let i=0;
-
-setInterval(()=>{
-    i=(i+1)%imgs.length;
-    document.querySelector(".hero").style.background=
-    `linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('${imgs[i]}') center/cover`;
-},4000);
