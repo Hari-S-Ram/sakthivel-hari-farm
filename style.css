@@ -4,17 +4,14 @@ body {
     background:#f5f5f5;
 }
 
-/* NAV */
 .nav {
     padding:20px;
     text-align:center;
     font-weight:bold;
     color:#2e7d32;
     background:white;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* HERO */
 .hero {
     height:80vh;
     background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
@@ -25,54 +22,27 @@ body {
     justify-content:center;
     align-items:center;
     text-align:center;
-    padding:20px;
 }
 
-.hero h1 {
-    font-size:36px;
-    margin-bottom:10px;
-}
-
-.hero p {
-    font-size:16px;
-    margin-bottom:20px;
-}
-
-/* BUTTONS */
 .btn {
     padding:12px 20px;
     margin:8px;
     border:none;
     cursor:pointer;
     border-radius:6px;
-    font-size:15px;
 }
 
-.btn-green {
-    background:#25D366;
-    color:white;
-}
+.btn-green { background:#25D366; color:white; }
+.btn-blue { background:#007bff; color:white; }
 
-.btn-blue {
-    background:#007bff;
-    color:white;
-}
-
-/* SECTION */
 .section {
-    padding:50px 20px;
+    padding:40px;
     text-align:center;
 }
 
-.section h2 {
-    color:#2e7d32;
-    margin-bottom:30px;
-}
-
-/* CARDS */
 .cards {
     display:flex;
-    gap:25px;
+    gap:20px;
     justify-content:center;
     flex-wrap:wrap;
 }
@@ -81,12 +51,10 @@ body {
     width:280px;
 }
 
-/* IMAGE */
 .card-img {
     position:relative;
     overflow:hidden;
     border-radius:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
 .card-img img {
@@ -96,7 +64,6 @@ body {
     transition:0.4s;
 }
 
-/* OVERLAY */
 .overlay {
     position:absolute;
     top:0;
@@ -113,21 +80,19 @@ body {
 
     opacity:0;
     transition:0.4s;
-    text-align:center;
-    padding:10px;
+
+    padding:15px;
+    gap:6px;
 }
 
-/* HOVER (Desktop) */
 .card:hover img {
     opacity:0.3;
-    transform:scale(1.1);
 }
 
 .card:hover .overlay {
     opacity:1;
 }
 
-/* MOBILE TAP */
 .card.active img {
     opacity:0.3;
 }
@@ -136,13 +101,12 @@ body {
     opacity:1;
 }
 
-/* FORM */
 form {
     max-width:400px;
     margin:auto;
 }
 
-input, textarea {
+input, textarea, select {
     width:100%;
     padding:12px;
     margin:8px 0;
@@ -150,16 +114,12 @@ input, textarea {
     border:1px solid #ccc;
 }
 
-/* FOOTER */
 .footer {
     background:#2e7d32;
     color:white;
     padding:20px;
-    text-align:center;
-    margin-top:30px;
 }
 
-/* FLOATING WHATSAPP BUTTON */
 .floating-btn {
     position:fixed;
     bottom:20px;
@@ -169,6 +129,4 @@ input, textarea {
     padding:15px;
     border-radius:50%;
     text-decoration:none;
-    font-size:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
