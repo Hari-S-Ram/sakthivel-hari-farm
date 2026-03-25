@@ -4,14 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sakthivel Hari Farm</title>
-<link rel="stylesheet" href="style.css">
+<title>Coconut Seedlings | Sakthivel Hari Farm</title>
 
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+<!-- NAV -->
+<div class="nav">
+    Sakthivel Hari Farm
+</div>
 
 <!-- HERO -->
 <div class="hero">
+
     <h1>High Yield Coconut Seedlings</h1>
     <p>Direct Farm Sale | High Yield | Bulk Orders Available</p>
 
@@ -19,18 +26,29 @@
         <button class="btn btn-blue">📞 Call Now</button>
     </a>
 
-    <a href="https://wa.me/919360421569?text=Hi%20I%20want%20details">
+    <a href="https://wa.me/919360421569?text=Hi%20I%20want%20coconut%20seedlings">
         <button class="btn btn-green">💬 WhatsApp</button>
     </a>
+
+    <!-- QUICK LINKS -->
+    <div class="quick-links">
+        <a href="#varieties">🌴 Varieties</a> |
+        <a href="#order">🛒 Order</a> |
+        <a href="#location">📍 Location</a>
+    </div>
+
+    <!-- SCROLL INDICATOR -->
+    <div class="scroll-down">⬇</div>
+
 </div>
 
 <!-- VARIETIES -->
-<div class="section">
+<div class="section" id="varieties">
     <h2>Our Varieties</h2>
 
     <div class="cards">
 
-        <div class="card" onclick="selectVariety('Dwarf')">
+        <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="dwarf.jpg">
                 <div class="overlay">
@@ -42,7 +60,7 @@
             </div>
         </div>
 
-        <div class="card" onclick="selectVariety('Tall')">
+        <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="tall.jpg">
                 <div class="overlay">
@@ -54,7 +72,7 @@
             </div>
         </div>
 
-        <div class="card" onclick="selectVariety('Hybrid')">
+        <div class="card" onclick="toggleCard(this)">
             <div class="card-img">
                 <img src="hybrid.jpg">
                 <div class="overlay">
@@ -70,31 +88,48 @@
 </div>
 
 <!-- ORDER -->
-<div class="section">
+<div class="section" id="order">
     <h2>Place Your Order</h2>
 
     <form onsubmit="sendToWhatsApp(event)">
+        <input type="text" id="name" placeholder="Name" required>
 
-        <!-- VARIETY -->
-        <select id="variety" required>
-            <option value="">Select Variety</option>
+        <select id="variety">
             <option value="Dwarf">Dwarf</option>
             <option value="Tall">Tall</option>
             <option value="Hybrid">Hybrid</option>
         </select>
 
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="tel" id="phone" placeholder="Phone" required>
         <input type="number" id="qty" placeholder="Quantity" required>
+        <textarea id="msg" placeholder="Your requirement"></textarea>
 
-        <!-- NEW FIELD -->
-        <input type="text" id="location" placeholder="Your Location" required>
-
-        <button class="btn btn-green" type="submit">Place Order</button>
-
+        <button class="btn btn-green" type="submit">Submit</button>
     </form>
 </div>
 
+<!-- LOCATION -->
+<div class="section" id="location">
+    <h2>Our Location</h2>
+
+    <p>Sengattampatti R.F., Tamil Nadu 624204</p>
+
+    <iframe 
+        src="https://www.google.com/maps?q=7R42+5J,Sengattampatti%20R.F.,Tamil%20Nadu%20624204&output=embed"
+        width="100%" height="300" style="border-radius:10px;">
+    </iframe>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    📞 9360421569 | Sakthivel Hari Farm
+</div>
+
+<!-- FLOATING -->
+<a href="https://wa.me/919360421569?text=Hi%2C%20I%20have%20a%20question"
+   class="floating-btn">💬</a>
+
 <script src="script.js"></script>
+
 </body>
 </html>
