@@ -99,9 +99,12 @@
         <input type="text" id="name" placeholder="Name" required>
         <input type="tel" id="phone" placeholder="Phone" required>
 
-        <input type="number" id="qty" placeholder="Quantity" required oninput="calculatePrice()">
+        <!-- 🔥 MIN + MAX ADDED -->
+        <input type="number" id="qty" placeholder="Quantity" required 
+               oninput="calculatePrice()" min="5" max="500">
 
-        <!-- PRICE FIELD -->
+        <small style="color:#777;">Minimum 5 | Maximum 500 seedlings</small>
+
         <input type="text" id="price" placeholder="Total Price" readonly>
 
         <textarea id="location" placeholder="Enter your delivery location" required></textarea>
@@ -127,8 +130,7 @@
     📞 9360421569 | Sakthivel Hari Farm
 </div>
 
-<a href="https://wa.me/919360421569?text=Hi%2C%20I%20have%20a%20question"
-   class="floating-btn">💬</a>
+<a href="https://wa.me/919360421569" class="floating-btn">💬</a>
 
 <script src="script.js"></script>
 
