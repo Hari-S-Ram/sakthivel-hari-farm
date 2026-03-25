@@ -1,6 +1,7 @@
 body {
     margin:0;
     font-family: 'Segoe UI', sans-serif;
+    background:#f5f5f5;
 }
 
 /* NAV */
@@ -9,42 +10,69 @@ body {
     text-align:center;
     font-weight:bold;
     color:#2e7d32;
+    background:white;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
 /* HERO */
 .hero {
     height:80vh;
     background:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-    url('images/farm.jpg') center/cover;
+    url('farm.jpg') center/cover;
     color:white;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     text-align:center;
+    padding:20px;
+}
+
+.hero h1 {
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.hero p {
+    font-size:16px;
+    margin-bottom:20px;
 }
 
 /* BUTTONS */
 .btn {
-    padding:10px 20px;
-    margin:5px;
+    padding:12px 20px;
+    margin:8px;
     border:none;
     cursor:pointer;
+    border-radius:6px;
+    font-size:15px;
 }
 
-.btn-green { background:#25D366; color:white; }
-.btn-blue { background:#007bff; color:white; }
+.btn-green {
+    background:#25D366;
+    color:white;
+}
+
+.btn-blue {
+    background:#007bff;
+    color:white;
+}
 
 /* SECTION */
 .section {
-    padding:50px;
+    padding:50px 20px;
     text-align:center;
+}
+
+.section h2 {
+    color:#2e7d32;
+    margin-bottom:30px;
 }
 
 /* CARDS */
 .cards {
     display:flex;
-    gap:20px;
+    gap:25px;
     justify-content:center;
     flex-wrap:wrap;
 }
@@ -58,6 +86,7 @@ body {
     position:relative;
     overflow:hidden;
     border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
 .card-img img {
@@ -84,9 +113,11 @@ body {
 
     opacity:0;
     transition:0.4s;
+    text-align:center;
+    padding:10px;
 }
 
-/* HOVER */
+/* HOVER (Desktop) */
 .card:hover img {
     opacity:0.3;
     transform:scale(1.1);
@@ -113,8 +144,10 @@ form {
 
 input, textarea {
     width:100%;
-    padding:10px;
-    margin:5px 0;
+    padding:12px;
+    margin:8px 0;
+    border-radius:6px;
+    border:1px solid #ccc;
 }
 
 /* FOOTER */
@@ -122,9 +155,11 @@ input, textarea {
     background:#2e7d32;
     color:white;
     padding:20px;
+    text-align:center;
+    margin-top:30px;
 }
 
-/* FLOATING BUTTON */
+/* FLOATING WHATSAPP BUTTON */
 .floating-btn {
     position:fixed;
     bottom:20px;
@@ -135,4 +170,5 @@ input, textarea {
     border-radius:50%;
     text-decoration:none;
     font-size:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
