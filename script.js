@@ -37,37 +37,54 @@ function sendToWhatsApp(e){
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
 
-    /* 🔥 1. PHONE VALIDATION */
-    if (phone.length !== 10 || isNaN(phone)) {
+    // 🔥 REMOVE SPACES
+    let cleanedPhone = phone.replace(/\s+/g, "");
+
+    // 🔥 BLOCK OWNER NUMBER
+    if (cleanedPhone === "9360421569") {
+        alert("Don't enter owner's mobile number");
+        return;
+    }
+
+    // 🔥 PHONE VALIDATION
+    if (cleanedPhone.length !== 10 || isNaN(cleanedPhone)) {
         alert("Enter valid 10-digit phone number");
         return;
     }
 
-    /* 🔥 2. MINIMUM QUANTITY */
-    if (qty < 5 || qty > 500) {
-    alert("Order must be between 5 and 500 seedlings");
-    return;
+    // 🔥 MIN QUANTITY
+    if (qty < 5) {
+        alert("Minimum order is 5 seedlings");
+        return;
     }
 
-    /* 🔥 3. CONFIRMATION POPUP */
+    // 🔥 MAX QUANTITY
+    if (qty > 500) {
+        alert("Maximum order is 500 seedlings");
+        return;
+    }
+
+    // 🔥 CONFIRMATION
     if (!confirm("Are you sure you want to place this order?")) {
         return;
     }
 
-    /* EXTRA SAFETY */
+    // 🔥 EXTRA SAFETY
     if (!price) {
         alert("Please select variety and quantity");
         return;
     }
 
+    // MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
         "\nVariety: " + variety +
-        "\nPhone: " + phone +
+        "\nPhone: " + cleanedPhone +
         "\nQuantity: " + qty +
         "\nTotal Price: " + price +
         "\nLocation: " + location;
 
+    // WHATSAPP REDIRECT
     window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
 }
