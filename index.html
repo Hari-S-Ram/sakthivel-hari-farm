@@ -44,12 +44,9 @@
                 <img src="dwarf.jpg">
                 <div class="overlay">
                     <h3>Dwarf</h3>
-                    <p>Yield: 80–100/year</p>
-                    <p>Harvest: 3 years</p>
+                    <p>Lifespan: 80–100/year</p>
+                    <p>Harvest starts: 3 years</p>
                     <p>Price: ₹150</p>
-                    <a href="https://wa.me/919360421569?text=Dwarf%20seedlings">
-                        <button class="btn btn-green">Enquire</button>
-                    </a>
                 </div>
             </div>
         </div>
@@ -60,12 +57,9 @@
                 <img src="tall.jpg">
                 <div class="overlay">
                     <h3>Tall</h3>
-                    <p>Yield: 60–80/year</p>
-                    <p>Harvest: 6–7 years</p>
+                    <p>Lifespan: 60–80/year</p>
+                    <p>Harvest starts: 6–7 years</p>
                     <p>Price: ₹120</p>
-                    <a href="https://wa.me/919360421569?text=Tall%20seedlings">
-                        <button class="btn btn-green">Enquire</button>
-                    </a>
                 </div>
             </div>
         </div>
@@ -76,12 +70,9 @@
                 <img src="hybrid.jpg">
                 <div class="overlay">
                     <h3>Hybrid</h3>
-                    <p>Yield: 100–120/year</p>
-                    <p>Harvest: 4 years</p>
+                    <p>Lifespan: 100–120/year</p>
+                    <p>Harvest starts: 4 years</p>
                     <p>Price: ₹180</p>
-                    <a href="https://wa.me/919360421569?text=Hybrid%20seedlings">
-                        <button class="btn btn-green">Enquire</button>
-                    </a>
                 </div>
             </div>
         </div>
@@ -95,11 +86,22 @@
 
     <form onsubmit="sendToWhatsApp(event)">
         <input type="text" id="name" placeholder="Name" required>
+
+        <!-- NEW DROPDOWN -->
+        <select id="variety" required>
+            <option value="">Select Variety</option>
+            <option value="Dwarf">Dwarf</option>
+            <option value="Tall">Tall</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+
         <input type="tel" id="phone" placeholder="Phone" required>
         <input type="number" id="qty" placeholder="Quantity" required>
         <textarea id="msg" placeholder="Your requirement"></textarea>
 
-        <button class="btn btn-green" type="submit">Submit via WhatsApp</button>
+        <button class="btn btn-green" type="submit">
+            Submit via WhatsApp
+        </button>
     </form>
 </div>
 
