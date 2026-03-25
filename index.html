@@ -94,11 +94,12 @@
     <form onsubmit="sendToWhatsApp(event)">
         <input type="text" id="name" placeholder="Name" required>
 
-        <select id="variety">
-            <option value="Dwarf">Dwarf</option>
-            <option value="Tall">Tall</option>
-            <option value="Hybrid">Hybrid</option>
-        </select>
+        <select id="variety" required>
+    <option value="" disabled selected>Select Variety</option>
+    <option value="Dwarf">Dwarf</option>
+    <option value="Tall">Tall</option>
+    <option value="Hybrid">Hybrid</option>
+         </select>
 
         <input type="tel" id="phone" placeholder="Phone" required>
         <input type="number" id="qty" placeholder="Quantity" required>
