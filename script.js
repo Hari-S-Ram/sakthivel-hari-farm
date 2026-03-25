@@ -1,75 +1,36 @@
-/* CARD */
-function toggleCard(card) {
-    document.querySelectorAll(".card").forEach(c => {
-        if (c !== card) c.classList.remove("active");
-    });
+function toggleCard(card){
     card.classList.toggle("active");
 }
 
-/* PRICE */
-function calculatePrice() {
-    let variety = document.getElementById("variety").value;
-    let qty = document.getElementById("qty").value;
+function calculatePrice(){
+    let v=variety.value;
+    let q=qty.value;
 
-    let price = 0;
+    let p=0;
 
-    if (variety === "Dwarf") price = 150;
-    else if (variety === "Tall") price = 120;
-    else if (variety === "Hybrid") price = 180;
+    if(v==="Dwarf") p=150;
+    else if(v==="Tall") p=120;
+    else if(v==="Hybrid") p=180;
 
-    document.getElementById("price").value =
-        (qty && variety) ? "₹ " + (price * qty) : "";
+    price.value=(v&&q)? "₹ "+(p*q):"";
 }
 
-/* ORDER */
 function sendToWhatsApp(e){
     e.preventDefault();
 
-    let name = document.getElementById("name").value;
-    let variety = document.getElementById("variety").value;
-    let phone = document.getElementById("phone").value;
-    let qty = document.getElementById("qty").value;
-    let price = document.getElementById("price").value;
-    let location = document.getElementById("location").value;
+    if(phone.value.length!=10){ alert("Invalid phone"); return; }
+    if(qty.value<5){ alert("Min 5"); return; }
+    if(!confirm("Confirm?")) return;
 
-    if (phone.length !== 10 || isNaN(phone)) {
-        alert("Invalid phone number");
-        return;
-    }
-
-    if (qty < 5) {
-        alert("Minimum order is 5");
-        return;
-    }
-
-    if (!confirm("Confirm order?")) return;
-
-    let text =
-        "🌴 Coconut Order\n\n" +
-        "Name: " + name +
-        "\nVariety: " + variety +
-        "\nPhone: " + phone +
-        "\nQuantity: " + qty +
-        "\nTotal Price: " + price +
-        "\nLocation: " + location;
-
-    window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
+    window.open("https://wa.me/919360421569");
 }
 
-/* HERO CAROUSEL (4 IMAGES ONLY) */
-const images = [
-    "farm.jpg",
-    "farm1.jpg",
-    "farm2.jpg",
-    "farm3.jpg"
-];
+/* CAROUSEL */
+const imgs=["farm.jpg","farm1.jpg","farm2.jpg","farm3.jpg"];
+let i=0;
 
-let i = 0;
-
-setInterval(() => {
-    i = (i + 1) % images.length;
-
-    document.querySelector(".hero").style.background =
-        `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('${images[i]}') center/cover`;
-}, 4000);
+setInterval(()=>{
+    i=(i+1)%imgs.length;
+    document.querySelector(".hero").style.background=
+    `linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('${imgs[i]}') center/cover`;
+},4000);
