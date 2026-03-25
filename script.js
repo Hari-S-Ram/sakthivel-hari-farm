@@ -44,9 +44,9 @@ function sendToWhatsApp(e){
     }
 
     /* 🔥 2. MINIMUM QUANTITY */
-    if (qty < 5) {
-        alert("Minimum order is 5 seedlings");
-        return;
+    if (qty < 5 || qty > 500) {
+    alert("Order must be between 5 and 500 seedlings");
+    return;
     }
 
     /* 🔥 3. CONFIRMATION POPUP */
