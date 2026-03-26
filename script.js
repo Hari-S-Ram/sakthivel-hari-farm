@@ -1,25 +1,43 @@
-// 🔥 NORMALIZE TEXT (for bad words)
+// 🔥 NORMALIZE TEXT
 function normalizeText(text) {
     return text
         .toLowerCase()
-        .replace(/[^a-z]/g, "")        // remove symbols/numbers/spaces
-        .replace(/(.)\1+/g, "$1");     // remove repeated letters (puuunda → punda)
+        .replace(/[^a-z]/g, "")        // remove symbols, numbers, spaces
+        .replace(/(.)\1+/g, "$1");     // remove repeated letters
 }
 
 
 // 🔥 ADVANCED BAD WORD FILTER
 function containsBadWords(name) {
 
+    let clean = normalizeText(name);
+
+    // BASIC WORD LIST
     let badWords = [
         "fuck","shit","bitch","asshole","bastard",
-        "sunni","punda","pundai","otha","thevidiya",
+        "sunni","punda","pundai","otha",
         "poolu","dick","sex","xxx","mavane","mavan","gay"
     ];
 
-    let clean = normalizeText(name);
-
     for (let i = 0; i < badWords.length; i++) {
         if (clean.includes(badWords[i])) {
+            return true;
+        }
+    }
+
+    // 🔥 PHONETIC PATTERNS (for variations like thevudiya)
+    let patterns = [
+        /t+h*e*v+u*d+i+y*a+/,
+        /d+e*v+u*d+i+y*a+/,
+        /t+e*v+d+i+y*a+/,
+        /p+u*n+d+a+/,
+        /s+u+n+n+i+/,
+        /o+t+h+a+/,
+        /m+a+v+a+n+/
+    ];
+
+    for (let i = 0; i < patterns.length; i++) {
+        if (patterns[i].test(clean)) {
             return true;
         }
     }
@@ -28,7 +46,7 @@ function containsBadWords(name) {
 }
 
 
-// 🔥 NORMALIZE PHONE (handles +91, spaces, etc.)
+// 🔥 NORMALIZE PHONE
 function normalizePhone(phone) {
     return phone.replace(/\D/g, "").slice(-10);
 }
@@ -91,7 +109,7 @@ function sendToWhatsApp(e){
         return;
     }
 
-    // 🔥 START DIGIT VALIDATION
+    // 🔥 START DIGIT CHECK
     if (!["9","8","7","6"].includes(phone[0])) {
         alert("Number must start with 9, 8, 7, or 6");
         return;
@@ -103,7 +121,7 @@ function sendToWhatsApp(e){
         return;
     }
 
-    // 🔥 REQUIRED FIELDS CHECK
+    // 🔥 REQUIRED CHECK
     if (!variety || !price || !location) {
         alert("Please fill all fields properly");
         return;
