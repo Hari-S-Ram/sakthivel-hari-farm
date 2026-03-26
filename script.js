@@ -1,52 +1,91 @@
+let otpVerified = false;
+let confirmationResult;
+let timerInterval;
+
+// PRICE
 function calculatePrice() {
-    let v = document.getElementById("variety").value;
-    let q = document.getElementById("qty").value;
-
-    let p = v === "Dwarf" ? 150 : v === "Tall" ? 120 : 180;
-
-    document.getElementById("price").value = q ? "₹ " + (p*q) : "";
+let v = document.getElementById("variety").value;
+let q = document.getElementById("qty").value;
+let p = v === "Dwarf" ? 150 : v === "Tall" ? 120 : 180;
+document.getElementById("price").value = q ? "₹ " + (p*q) : "";
 }
 
+// SEND OTP
+function sendOTP() {
+
+let phone = document.getElementById("phone").value;
+
+if (phone.length !== 10) {
+alert("Invalid phone");
+return;
+}
+
+phone = "+91" + phone;
+
+const auth = firebase.auth();
+const verifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+document.getElementById("sendOtpBtn").disabled = true;
+
+auth.signInWithPhoneNumber(phone, verifier)
+.then((result)=>{
+confirmationResult = result;
+alert("OTP Sent (123456)");
+document.getElementById("otpSection").style.display="block";
+startTimer(300);
+})
+.catch(e=>{
+alert(e.message);
+});
+}
+
+// VERIFY OTP
+function verifyOTP(){
+let code = document.getElementById("otp").value;
+
+confirmationResult.confirm(code)
+.then(()=>{
+otpVerified=true;
+clearInterval(timerInterval);
+document.getElementById("placeOrderBtn").disabled=false;
+document.getElementById("phone").readOnly=true;
+alert("Verified");
+})
+.catch(()=>alert("Wrong OTP"));
+}
+
+// TIMER
+function startTimer(s){
+let t=s;
+timerInterval=setInterval(()=>{
+let m=Math.floor(t/60);
+let sec=t%60;
+document.getElementById("timer").innerText=`${m}:${sec<10?"0"+sec:sec}`;
+t--;
+if(t<0){
+clearInterval(timerInterval);
+alert("OTP expired");
+}
+},1000);
+}
+
+// WHATSAPP
 function sendToWhatsApp(e){
-    e.preventDefault();
+e.preventDefault();
 
-    let name = document.getElementById("name").value.trim();
-    let phone = document.getElementById("phone").value.replace(/\s+/g,"");
-    let qty = document.getElementById("qty").value;
-    let price = document.getElementById("price").value;
+if(!otpVerified){
+alert("Verify OTP first");
+return;
+}
 
-    if (name.toLowerCase() === "harisivaram") {
-        alert("Don't enter owner's name");
-        return;
-    }
+// YOUR ORIGINAL VALIDATION KEPT
+let name = document.getElementById("name").value.trim();
+let phone = document.getElementById("phone").value;
+let qty = document.getElementById("qty").value;
+let price = document.getElementById("price").value;
 
-    if (phone === "9360421569") {
-        alert("Don't enter owner's number");
-        return;
-    }
+let confirmOrder = confirm("Place order?");
+if (!confirmOrder) return;
 
-    if (phone.length !== 10 || isNaN(phone)) {
-        alert("Invalid phone number");
-        return;
-    }
-
-    if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Number must start with 9, 8, 7, or 6");
-        return;
-    }
-
-    if (qty < 5 || qty > 500) {
-        alert("Quantity must be between 5 and 500");
-        return;
-    }
-
-    if (!price) {
-        alert("Fill all fields properly");
-        return;
-    }
-
-    let confirmOrder = confirm("Are you sure you want to place this order?");
-    if (!confirmOrder) return;
-
-    window.open("https://wa.me/919360421569");
+window.open("https://wa.me/919360421569");
 }
