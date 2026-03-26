@@ -21,7 +21,7 @@
         <button class="btn btn-blue">📞 Call Now</button>
     </a>
 
-    <a href="https://wa.me/919360421569?text=Hi%20I%20want%20coconut%20seedlings">
+    <a href="https://wa.me/919360421569">
         <button class="btn btn-green">💬 WhatsApp</button>
     </a>
 
@@ -37,47 +37,53 @@
 <!-- VARIETIES -->
 <div class="section" id="varieties">
     <h2>Our Varieties</h2>
-    <p class="section-hint">Tap or click the image to view details</p>
+    <p class="section-hint">Choose the best seedlings for your farm</p>
 
     <div class="cards">
 
-        <div class="card" onclick="toggleCard(this)">
+        <!-- DWARF -->
+        <div class="card">
             <div class="card-img">
                 <img src="dwarf.jpg">
-                <div class="overlay">
-                    <h3>Dwarf</h3>
-                    <p>Lifespan: 80–100/year</p>
-                    <p>Harvest starts: 3 years</p>
-                    <p>Price: ₹150</p>
-                </div>
             </div>
-            <div class="card-hint">Tap to view details</div>
+            <div class="card-content">
+                <h3>Dwarf</h3>
+                <p>Yield: Early bearing (3 years)</p>
+                <p>Height: 5–7 meters</p>
+                <p>Lifespan: 40–50 years</p>
+                <p>Best for: Quick income farming</p>
+                <p><b>Price: ₹150</b></p>
+            </div>
         </div>
 
-        <div class="card" onclick="toggleCard(this)">
+        <!-- TALL -->
+        <div class="card">
             <div class="card-img">
                 <img src="tall.jpg">
-                <div class="overlay">
-                    <h3>Tall</h3>
-                    <p>Lifespan: 60–80/year</p>
-                    <p>Harvest starts: 6–7 years</p>
-                    <p>Price: ₹120</p>
-                </div>
             </div>
-            <div class="card-hint">Tap to view details</div>
+            <div class="card-content">
+                <h3>Tall</h3>
+                <p>Yield: Long-term (8–10 years)</p>
+                <p>Height: 15–18 meters</p>
+                <p>Lifespan: 80–90 years</p>
+                <p>Best for: Strong & durable trees</p>
+                <p><b>Price: ₹120</b></p>
+            </div>
         </div>
 
-        <div class="card" onclick="toggleCard(this)">
+        <!-- HYBRID -->
+        <div class="card">
             <div class="card-img">
                 <img src="hybrid.jpg">
-                <div class="overlay">
-                    <h3>Hybrid</h3>
-                    <p>Lifespan: 100–120/year</p>
-                    <p>Harvest starts: 4 years</p>
-                    <p>Price: ₹180</p>
-                </div>
             </div>
-            <div class="card-hint">Tap to view details</div>
+            <div class="card-content">
+                <h3>Hybrid</h3>
+                <p>Yield: High (early + long life)</p>
+                <p>Best quality copra & oil</p>
+                <p>High productivity</p>
+                <p>Needs good care</p>
+                <p><b>Price: ₹180</b></p>
+            </div>
         </div>
 
     </div>
@@ -100,9 +106,8 @@
         <input type="tel" id="phone" placeholder="Phone" required>
 
         <input type="number" id="qty" placeholder="Quantity"
-required oninput="calculatePrice()" min="5" max="500">
+        required oninput="calculatePrice()" min="5" max="500">
 
-        <!-- PRICE FIELD -->
         <input type="text" id="price" placeholder="Total Price" readonly>
 
         <textarea id="location" placeholder="Enter your delivery location" required></textarea>
@@ -128,8 +133,7 @@ required oninput="calculatePrice()" min="5" max="500">
     📞 9360421569 | Sakthivel Hari Farm
 </div>
 
-<a href="https://wa.me/919360421569?text=Hi%2C%20I%20have%20a%20question"
-   class="floating-btn">💬</a>
+<a href="https://wa.me/919360421569" class="floating-btn">💬</a>
 
 <script src="script.js"></script>
 
