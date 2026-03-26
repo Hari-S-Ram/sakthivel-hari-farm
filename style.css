@@ -36,8 +36,9 @@ body {
 .btn-blue { background:#007bff; }
 .btn-green { background:#25D366; }
 
-.quick-links {
-    margin-top:15px;
+.quick-links span {
+    display:block;
+    margin-bottom:5px;
 }
 
 .quick-links a {
@@ -110,8 +111,4 @@ input, textarea, select {
     padding:15px;
     border-radius:50%;
     color:white;
-}
-.quick-links span {
-    display:block;
-    margin-bottom:5px;
 }
