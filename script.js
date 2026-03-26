@@ -1,62 +1,101 @@
+/* CARD TOGGLE */
+function toggleCard(card) {
+    document.querySelectorAll(".card").forEach(c => {
+        if (c !== card) c.classList.remove("active");
+    });
+    card.classList.toggle("active");
+}
+
+/* PRICE CALCULATION */
+function calculatePrice() {
+    let variety = document.getElementById("variety").value;
+    let qty = document.getElementById("qty").value;
+
+    let pricePerUnit = 0;
+
+    if (variety === "Dwarf") pricePerUnit = 150;
+    else if (variety === "Tall") pricePerUnit = 120;
+    else if (variety === "Hybrid") pricePerUnit = 180;
+
+    let total = pricePerUnit * qty;
+
+    if (variety && qty > 0) {
+        document.getElementById("price").value = "₹ " + total;
+    } else {
+        document.getElementById("price").value = "";
+    }
+}
+
+/* WHATSAPP SUBMIT WITH FULL PROTECTION */
 function sendToWhatsApp(e){
     e.preventDefault();
 
     let name = document.getElementById("name").value.trim();
     let variety = document.getElementById("variety").value;
-    let phone = document.getElementById("phone").value.replace(/\s+/g,"");
+    let phone = document.getElementById("phone").value.trim();
     let qty = document.getElementById("qty").value;
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
 
-    // BLOCK OWNER NAME
-    if (name.toLowerCase() === "harisivaram") {
+    // 🔥 BLOCK OWNER NAME
+    let cleanedName = name.toLowerCase().trim();
+    if (cleanedName === "harisivaram") {
         alert("Don't enter owner's name");
         return;
     }
 
-    // BLOCK OWNER NUMBER
-    if (phone === "9360421569") {
-        alert("Don't enter owner's number");
+    // 🔥 REMOVE SPACES FROM PHONE
+    let cleanedPhone = phone.replace(/\s+/g, "");
+
+    // 🔥 BLOCK OWNER NUMBER
+    if (cleanedPhone === "9360421569") {
+        alert("Don't enter owner's mobile number");
         return;
     }
 
-    // PHONE VALIDATION
-    if (phone.length !== 10 || isNaN(phone)) {
-        alert("Invalid phone number");
+    // 🔥 PHONE VALIDATION
+    if (cleanedPhone.length !== 10 || isNaN(cleanedPhone)) {
+        alert("Enter valid 10-digit phone number");
         return;
     }
 
-    // START DIGIT CHECK
-    if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Number must start with 9, 8, 7, or 6");
+    // 🔥 START DIGIT CHECK
+    if (!["9","8","7","6"].includes(cleanedPhone[0])) {
+        alert("Enter valid mobile number starting with 9, 8, 7, or 6");
         return;
     }
 
-    // QUANTITY CHECK
-    if (qty < 5 || qty > 500) {
-        alert("Quantity must be between 5 and 500");
+    // 🔥 MIN QUANTITY
+    if (qty < 5) {
+        alert("Minimum order is 5 seedlings");
         return;
     }
 
-    // SAFETY
+    // 🔥 MAX QUANTITY
+    if (qty > 500) {
+        alert("Maximum order is 500 seedlings");
+        return;
+    }
+
+    // 🔥 CONFIRMATION
+    if (!confirm("Are you sure you want to place this order?")) {
+        return;
+    }
+
+    // 🔥 EXTRA SAFETY
     if (!price) {
-        alert("Fill all fields properly");
+        alert("Please select variety and quantity");
         return;
     }
 
-    // CONFIRM
-    if (!confirm("Are you sure you want to place this order?")) return;
-
-    // ✅ MESSAGE (THIS WAS MISSING)
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
         "\nVariety: " + variety +
-        "\nPhone: " + phone +
+        "\nPhone: " + cleanedPhone +
         "\nQuantity: " + qty +
         "\nTotal Price: " + price +
         "\nLocation: " + location;
 
-    // ✅ FINAL FIX
     window.open("https://wa.me/919360421569?text=" + encodeURIComponent(text));
 }
