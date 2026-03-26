@@ -21,9 +21,9 @@ function calculatePrice() {
 function containsBadWords(name) {
 
     let badWords = [
-        "fuck","shit","bitch","asshole","bastard",
+        "fuck","shit","bitch","asshole","koothi","bastard",
         "sunni","sunniya","punda","pundai","otha",
-        "thevidiya","poolu","dick","sex","xxx"
+        "thevidiya","poolu","dick","sex","xxx","mavane","gay","mavan","punda mavan"
     ];
 
     let clean = name.toLowerCase();
