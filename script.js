@@ -8,28 +8,24 @@ function normalizeText(text) {
 }
 
 
-// 🔥 SMART AI-LIKE FILTER
+// 🔥 SMART ABUSE DETECTION
 function detectAbuse(name) {
 
     let clean = normalizeText(name);
     let score = 0;
 
-    // 🔥 STRONG WORDS (high score)
     let strongWords = [
         "fuck","bitch","pundai","punda","sunni","koothi","goothi","kuthi"
     ];
 
-    // 🔥 MEDIUM WORDS
     let mediumWords = [
         "shit","asshole","bastard","otha","poolu","dick"
     ];
 
-    // 🔥 MILD / SUSPICIOUS
     let mildWords = [
         "sex","xxx","mavan","gay"
     ];
 
-    // 🔥 SCORING
     for (let i = 0; i < strongWords.length; i++) {
         if (clean.includes(strongWords[i])) score += 5;
     }
@@ -42,7 +38,6 @@ function detectAbuse(name) {
         if (clean.includes(mildWords[i])) score += 1;
     }
 
-    // 🔥 PHONETIC PATTERNS
     let patterns = [
         /t+h*e*v+u+d+i+y+a+/,
         /p+u+n+d+a+i+/,
@@ -56,11 +51,9 @@ function detectAbuse(name) {
         if (patterns[i].test(clean)) score += 4;
     }
 
-    // 🔥 REPETITIVE / SPAMMY TEXT
     if (clean.length > 15) score += 1;
 
-    // 🔥 DECISION
-    return score >= 4;   // threshold
+    return score >= 4;
 }
 
 
@@ -89,8 +82,32 @@ function calculatePrice() {
 }
 
 
+// 🔥 VERIFY LOCATION USING GOOGLE MAPS
+async function verifyLocation(location) {
+
+    let apiKey = "YOUR_API_KEY_HERE"; // 🔥 PUT YOUR KEY
+
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=${apiKey}`;
+
+    try {
+        let res = await fetch(url);
+        let data = await res.json();
+
+        if (data.status === "OK" && data.results.length > 0) {
+            return true;
+        }
+
+        return false;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+
+
 // 🔥 MAIN FUNCTION
-function sendToWhatsApp(e){
+async function sendToWhatsApp(e){
     e.preventDefault();
 
     let name = document.getElementById("name").value.trim();
@@ -108,7 +125,7 @@ function sendToWhatsApp(e){
         return;
     }
 
-    // 🔥 SMART ABUSE DETECTION
+    // 🔥 ABUSE CHECK
     if (detectAbuse(name)) {
         alert("Inappropriate or abusive content detected");
         return;
@@ -127,23 +144,34 @@ function sendToWhatsApp(e){
     }
 
     if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Invalid number start");
+        alert("Number must start with 9, 8, 7, or 6");
         return;
     }
 
-    // 🔥 QUANTITY
+    // 🔥 QUANTITY CHECK
     if (isNaN(qty) || qty < 5 || qty > 500) {
         alert("Quantity must be 5–500");
         return;
     }
 
-    if (!price || !location) {
+    // 🔥 BASIC CHECK
+    if (!variety || !price || !location) {
         alert("Fill all fields");
         return;
     }
 
-    if (!confirm("Confirm order?")) return;
+    // 🔥 GOOGLE LOCATION VALIDATION
+    let isReal = await verifyLocation(location);
 
+    if (!isReal) {
+        alert("Enter a real address (not found on Google Maps)");
+        return;
+    }
+
+    // 🔥 CONFIRMATION
+    if (!confirm("Are you sure you want to place this order?")) return;
+
+    // 🔥 WHATSAPP MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
