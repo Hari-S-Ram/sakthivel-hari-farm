@@ -8,52 +8,35 @@ function normalizeText(text) {
 }
 
 
-// 🔥 SMART ABUSE DETECTION
+// 🔥 ABUSE DETECTION (UPDATED)
 function detectAbuse(name) {
 
     let clean = normalizeText(name);
-    let score = 0;
 
-    let strongWords = [
-        "fuck","bitch","pundai","punda","sunni","koothi","goothi","kuthi"
+    // 🔥 DIRECT BAD WORDS
+    let badWords = [
+        "fuck","bitch","pundai","punda","sunni",
+        "koothi","goothi","kuthi","otha"
     ];
 
-    let mediumWords = [
-        "shit","asshole","bastard","otha","poolu","dick"
+    for (let i = 0; i < badWords.length; i++) {
+        if (clean.includes(badWords[i])) return true;
+    }
+
+    // 🔥 SENTENCE LEVEL (VERY IMPORTANT)
+    let sentencePatterns = [
+        /oru\s*(venna|punda|loosu)/,
+        /dei\s*(venna|punda)/,
+        /nee\s*(punda|loosu)/
     ];
 
-    let mildWords = [
-        "sex","xxx","mavan","gay"
-    ];
-
-    for (let i = 0; i < strongWords.length; i++) {
-        if (clean.includes(strongWords[i])) score += 5;
+    for (let i = 0; i < sentencePatterns.length; i++) {
+        if (sentencePatterns[i].test(name.toLowerCase())) {
+            return true;
+        }
     }
 
-    for (let i = 0; i < mediumWords.length; i++) {
-        if (clean.includes(mediumWords[i])) score += 3;
-    }
-
-    for (let i = 0; i < mildWords.length; i++) {
-        if (clean.includes(mildWords[i])) score += 1;
-    }
-
-    let patterns = [
-        /t+h*e*v+u+d+i+y+a+/,
-        /p+u+n+d+a+i+/,
-        /k+o+o*t+h+i+/,
-        /k+u+t+h+i+/,
-        /s+u+n+n+i+/,
-        /o+t+h+a+/
-    ];
-
-    for (let i = 0; i < patterns.length; i++) {
-        if (patterns[i].test(clean)) score += 4;
-    }
-
-    if (clean.length > 15) score += 1;
-
-    return score >= 4;
+    return false;
 }
 
 
@@ -63,7 +46,7 @@ function normalizePhone(phone) {
 }
 
 
-// 🔥 PRICE CALCULATION
+// 🔥 PRICE CALCULATION (SAFE)
 function calculatePrice() {
     let v = document.getElementById("variety").value;
     let q = parseInt(document.getElementById("qty").value);
@@ -82,32 +65,8 @@ function calculatePrice() {
 }
 
 
-// 🔥 VERIFY LOCATION USING GOOGLE MAPS
-async function verifyLocation(location) {
-
-    let apiKey = "YOUR_API_KEY_HERE"; // 🔥 PUT YOUR KEY
-
-    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=${apiKey}`;
-
-    try {
-        let res = await fetch(url);
-        let data = await res.json();
-
-        if (data.status === "OK" && data.results.length > 0) {
-            return true;
-        }
-
-        return false;
-
-    } catch (err) {
-        console.log(err);
-        return false;
-    }
-}
-
-
 // 🔥 MAIN FUNCTION
-async function sendToWhatsApp(e){
+function sendToWhatsApp(e){
     e.preventDefault();
 
     let name = document.getElementById("name").value.trim();
@@ -117,61 +76,52 @@ async function sendToWhatsApp(e){
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
 
-    let cleanName = normalizeText(name);
+    // 🔥 NAME VALIDATION
+    if (name.length < 3) {
+        alert("Enter valid name");
+        return;
+    }
 
-    // 🔥 OWNER NAME BLOCK
-    if (cleanName === "harisivaram") {
+    if (normalizeText(name) === "harisivaram") {
         alert("Don't enter owner's name");
         return;
     }
 
-    // 🔥 ABUSE CHECK
     if (detectAbuse(name)) {
-        alert("Inappropriate or abusive content detected");
+        alert("Abusive or invalid name not allowed");
         return;
     }
 
-    // 🔥 OWNER NUMBER BLOCK
+    // 🔥 PHONE VALIDATION
     if (phone === "9360421569") {
         alert("Don't enter owner's number");
         return;
     }
 
-    // 🔥 PHONE VALIDATION
     if (phone.length !== 10 || /^0+$/.test(phone)) {
         alert("Enter valid phone number");
         return;
     }
 
     if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Number must start with 9, 8, 7, or 6");
+        alert("Invalid phone number");
         return;
     }
 
-    // 🔥 QUANTITY CHECK
-    if (isNaN(qty) || qty < 5 || qty > 500) {
-        alert("Quantity must be 5–500");
+    // 🔥 QUANTITY (STRICT)
+    if (!Number.isInteger(qty) || qty < 5 || qty > 500) {
+        alert("Quantity must be between 5 and 500");
         return;
     }
 
-    // 🔥 BASIC CHECK
+    // 🔥 REQUIRED CHECK
     if (!variety || !price || !location) {
-        alert("Fill all fields");
+        alert("Fill all fields properly");
         return;
     }
 
-    // 🔥 GOOGLE LOCATION VALIDATION
-    let isReal = await verifyLocation(location);
+    if (!confirm("Confirm order?")) return;
 
-    if (!isReal) {
-        alert("Enter a real address (not found on Google Maps)");
-        return;
-    }
-
-    // 🔥 CONFIRMATION
-    if (!confirm("Are you sure you want to place this order?")) return;
-
-    // 🔥 WHATSAPP MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
