@@ -111,3 +111,7 @@ input, textarea, select {
     border-radius:50%;
     color:white;
 }
+.quick-links span {
+    display:block;
+    margin-bottom:5px;
+}
