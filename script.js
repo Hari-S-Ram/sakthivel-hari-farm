@@ -1,32 +1,22 @@
-// PRICE CALCULATION
-function calculatePrice() {
-    let v = document.getElementById("variety").value;
-    let q = parseInt(document.getElementById("qty").value);
-
-    let p = 0;
-    if (v === "Dwarf") p = 150;
-    else if (v === "Tall") p = 120;
-    else if (v === "Hybrid") p = 180;
-
-    if (!v || isNaN(q) || q <= 0) {
-        document.getElementById("price").value = "";
-        return;
-    }
-
-    document.getElementById("price").value = "₹ " + (p * q);
+// 🔥 NORMALIZE TEXT (for bad words)
+function normalizeText(text) {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z]/g, "")        // remove symbols/numbers/spaces
+        .replace(/(.)\1+/g, "$1");     // remove repeated letters (puuunda → punda)
 }
 
 
-// 🔥 BAD WORD FILTER FUNCTION
+// 🔥 ADVANCED BAD WORD FILTER
 function containsBadWords(name) {
 
     let badWords = [
-        "fuck","shit","bitch","asshole","koothi","bastard",
-        "sunni","sunniya","punda","pundai","otha",
-        "thevidiya","poolu","dick","sex","xxx","mavane","gay","mavan","punda mavan"
+        "fuck","shit","bitch","asshole","bastard",
+        "sunni","punda","pundai","otha","thevidiya",
+        "poolu","dick","sex","xxx","mavane","mavan","gay"
     ];
 
-    let clean = name.toLowerCase();
+    let clean = normalizeText(name);
 
     for (let i = 0; i < badWords.length; i++) {
         if (clean.includes(badWords[i])) {
@@ -38,13 +28,41 @@ function containsBadWords(name) {
 }
 
 
-// WHATSAPP SUBMIT
+// 🔥 NORMALIZE PHONE (handles +91, spaces, etc.)
+function normalizePhone(phone) {
+    return phone.replace(/\D/g, "").slice(-10);
+}
+
+
+// 🔥 PRICE CALCULATION
+function calculatePrice() {
+    let variety = document.getElementById("variety").value;
+    let qty = parseInt(document.getElementById("qty").value);
+
+    let pricePerUnit = 0;
+
+    if (variety === "Dwarf") pricePerUnit = 150;
+    else if (variety === "Tall") pricePerUnit = 120;
+    else if (variety === "Hybrid") pricePerUnit = 180;
+
+    if (!variety || isNaN(qty) || qty <= 0) {
+        document.getElementById("price").value = "";
+        return;
+    }
+
+    let total = pricePerUnit * qty;
+    document.getElementById("price").value = "₹ " + total;
+}
+
+
+// 🔥 MAIN FUNCTION
 function sendToWhatsApp(e){
     e.preventDefault();
 
     let name = document.getElementById("name").value.trim();
     let variety = document.getElementById("variety").value;
-    let phone = document.getElementById("phone").value.replace(/\s+/g,"");
+    let rawPhone = document.getElementById("phone").value;
+    let phone = normalizePhone(rawPhone);
     let qty = parseInt(document.getElementById("qty").value);
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
@@ -55,46 +73,46 @@ function sendToWhatsApp(e){
         return;
     }
 
-    // 🔥 BAD WORD CHECK
+    // 🔥 BAD WORD BLOCK
     if (containsBadWords(name)) {
         alert("Abusive or inappropriate words are not allowed");
         return;
     }
 
-    // 🔥 PHONE BLOCK
+    // 🔥 OWNER NUMBER BLOCK
     if (phone === "9360421569") {
-        alert("Don't enter owner's number");
+        alert("Don't enter owner's mobile number");
         return;
     }
 
     // 🔥 PHONE VALIDATION
-    if (phone.length !== 10 || isNaN(phone)) {
+    if (phone.length !== 10) {
         alert("Enter valid 10-digit phone number");
         return;
     }
 
-    // 🔥 START DIGIT CHECK
+    // 🔥 START DIGIT VALIDATION
     if (!["9","8","7","6"].includes(phone[0])) {
         alert("Number must start with 9, 8, 7, or 6");
         return;
     }
 
-    // 🔥 QUANTITY CHECK
+    // 🔥 QUANTITY VALIDATION
     if (isNaN(qty) || qty < 5 || qty > 500) {
         alert("Quantity must be between 5 and 500");
         return;
     }
 
-    // 🔥 EMPTY CHECK
-    if (!price || !location) {
-        alert("Fill all fields properly");
+    // 🔥 REQUIRED FIELDS CHECK
+    if (!variety || !price || !location) {
+        alert("Please fill all fields properly");
         return;
     }
 
-    // 🔥 CONFIRM
+    // 🔥 CONFIRMATION
     if (!confirm("Are you sure you want to place this order?")) return;
 
-    // MESSAGE
+    // 🔥 WHATSAPP MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
