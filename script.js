@@ -1,10 +1,3 @@
-function toggleCard(card) {
-    document.querySelectorAll(".card").forEach(c => {
-        if (c !== card) c.classList.remove("active");
-    });
-    card.classList.toggle("active");
-}
-
 function calculatePrice() {
     let v = document.getElementById("variety").value;
     let q = document.getElementById("qty").value;
@@ -33,31 +26,27 @@ function sendToWhatsApp(e){
     }
 
     if (phone.length !== 10 || isNaN(phone)) {
-        alert("Invalid phone");
+        alert("Invalid phone number");
         return;
     }
 
     if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Invalid number start");
+        alert("Number must start with 9, 8, 7, or 6");
         return;
     }
 
     if (qty < 5 || qty > 500) {
-        alert("Quantity must be 5–500");
-        return;
-    }
-
-    let confirmOrder = prompt("Type YES to confirm your order");
-
-    if (confirmOrder !== "YES") {
-        alert("Order cancelled");
+        alert("Quantity must be between 5 and 500");
         return;
     }
 
     if (!price) {
-        alert("Fill all fields");
+        alert("Fill all fields properly");
         return;
     }
+
+    let confirmOrder = confirm("Are you sure you want to place this order?");
+    if (!confirmOrder) return;
 
     window.open("https://wa.me/919360421569");
 }
