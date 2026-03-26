@@ -106,6 +106,16 @@
         <input type="text" id="name" placeholder="Name" required>
         <input type="tel" id="phone" placeholder="Phone" required>
 
+<button type="button" onclick="sendOTP()">Send OTP</button>
+
+<div id="otpSection" style="display:none;">
+    <input type="text" id="otp" placeholder="Enter OTP"><br>
+    <p id="timer">05:00</p>
+    <button type="button" onclick="verifyOTP()">Verify OTP</button>
+</div>
+
+<div id="recaptcha-container"></div>
+
         <input type="number" id="qty" placeholder="Quantity"
         required oninput="calculatePrice()" min="5" max="500">
 
