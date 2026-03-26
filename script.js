@@ -30,7 +30,7 @@ document.getElementById("sendOtpBtn").disabled = true;
 auth.signInWithPhoneNumber(phone, verifier)
 .then((result)=>{
 confirmationResult = result;
-alert("OTP Sent (123456)");
+alert("OTP Sent Successfully");
 document.getElementById("otpSection").style.display="block";
 startTimer(300);
 })
