@@ -2,47 +2,65 @@
 function normalizeText(text) {
     return text
         .toLowerCase()
-        .replace(/[^a-z]/g, "")        // remove symbols, numbers, spaces
-        .replace(/(.)\1+/g, "$1");     // remove repeated letters
+        .replace(/[@$!0-9]/g, "")
+        .replace(/[^a-z]/g, "")
+        .replace(/(.)\1+/g, "$1");
 }
 
 
-// 🔥 ADVANCED BAD WORD FILTER
-function containsBadWords(name) {
+// 🔥 SMART AI-LIKE FILTER
+function detectAbuse(name) {
 
     let clean = normalizeText(name);
+    let score = 0;
 
-    // BASIC WORD LIST
-    let badWords = [
-        "fuck","shit","bitch","asshole","bastard",
-        "sunni","punda","pundai","otha",
-        "poolu","dick","sex","xxx","mavane","mavan","gay"
+    // 🔥 STRONG WORDS (high score)
+    let strongWords = [
+        "fuck","bitch","pundai","punda","sunni","koothi","goothi","kuthi"
     ];
 
-    for (let i = 0; i < badWords.length; i++) {
-        if (clean.includes(badWords[i])) {
-            return true;
-        }
+    // 🔥 MEDIUM WORDS
+    let mediumWords = [
+        "shit","asshole","bastard","otha","poolu","dick"
+    ];
+
+    // 🔥 MILD / SUSPICIOUS
+    let mildWords = [
+        "sex","xxx","mavan","gay"
+    ];
+
+    // 🔥 SCORING
+    for (let i = 0; i < strongWords.length; i++) {
+        if (clean.includes(strongWords[i])) score += 5;
     }
 
-    // 🔥 PHONETIC PATTERNS (for variations like thevudiya)
+    for (let i = 0; i < mediumWords.length; i++) {
+        if (clean.includes(mediumWords[i])) score += 3;
+    }
+
+    for (let i = 0; i < mildWords.length; i++) {
+        if (clean.includes(mildWords[i])) score += 1;
+    }
+
+    // 🔥 PHONETIC PATTERNS
     let patterns = [
-        /t+h*e*v+u*d+i+y*a+/,
-        /d+e*v+u*d+i+y*a+/,
-        /t+e*v+d+i+y*a+/,
-        /p+u*n+d+a+/,
+        /t+h*e*v+u+d+i+y+a+/,
+        /p+u+n+d+a+i+/,
+        /k+o+o*t+h+i+/,
+        /k+u+t+h+i+/,
         /s+u+n+n+i+/,
-        /o+t+h+a+/,
-        /m+a+v+a+n+/
+        /o+t+h+a+/
     ];
 
     for (let i = 0; i < patterns.length; i++) {
-        if (patterns[i].test(clean)) {
-            return true;
-        }
+        if (patterns[i].test(clean)) score += 4;
     }
 
-    return false;
+    // 🔥 REPETITIVE / SPAMMY TEXT
+    if (clean.length > 15) score += 1;
+
+    // 🔥 DECISION
+    return score >= 4;   // threshold
 }
 
 
@@ -54,22 +72,20 @@ function normalizePhone(phone) {
 
 // 🔥 PRICE CALCULATION
 function calculatePrice() {
-    let variety = document.getElementById("variety").value;
-    let qty = parseInt(document.getElementById("qty").value);
+    let v = document.getElementById("variety").value;
+    let q = parseInt(document.getElementById("qty").value);
 
-    let pricePerUnit = 0;
+    let p = 0;
+    if (v === "Dwarf") p = 150;
+    else if (v === "Tall") p = 120;
+    else if (v === "Hybrid") p = 180;
 
-    if (variety === "Dwarf") pricePerUnit = 150;
-    else if (variety === "Tall") pricePerUnit = 120;
-    else if (variety === "Hybrid") pricePerUnit = 180;
-
-    if (!variety || isNaN(qty) || qty <= 0) {
+    if (!v || isNaN(q) || q <= 0) {
         document.getElementById("price").value = "";
         return;
     }
 
-    let total = pricePerUnit * qty;
-    document.getElementById("price").value = "₹ " + total;
+    document.getElementById("price").value = "₹ " + (p * q);
 }
 
 
@@ -79,58 +95,55 @@ function sendToWhatsApp(e){
 
     let name = document.getElementById("name").value.trim();
     let variety = document.getElementById("variety").value;
-    let rawPhone = document.getElementById("phone").value;
-    let phone = normalizePhone(rawPhone);
+    let phone = normalizePhone(document.getElementById("phone").value);
     let qty = parseInt(document.getElementById("qty").value);
     let price = document.getElementById("price").value;
     let location = document.getElementById("location").value.trim();
 
+    let cleanName = normalizeText(name);
+
     // 🔥 OWNER NAME BLOCK
-    if (name.toLowerCase() === "harisivaram") {
+    if (cleanName === "harisivaram") {
         alert("Don't enter owner's name");
         return;
     }
 
-    // 🔥 BAD WORD BLOCK
-    if (containsBadWords(name)) {
-        alert("Abusive or inappropriate words are not allowed");
+    // 🔥 SMART ABUSE DETECTION
+    if (detectAbuse(name)) {
+        alert("Inappropriate or abusive content detected");
         return;
     }
 
     // 🔥 OWNER NUMBER BLOCK
     if (phone === "9360421569") {
-        alert("Don't enter owner's mobile number");
+        alert("Don't enter owner's number");
         return;
     }
 
     // 🔥 PHONE VALIDATION
-    if (phone.length !== 10) {
-        alert("Enter valid 10-digit phone number");
+    if (phone.length !== 10 || /^0+$/.test(phone)) {
+        alert("Enter valid phone number");
         return;
     }
 
-    // 🔥 START DIGIT CHECK
     if (!["9","8","7","6"].includes(phone[0])) {
-        alert("Number must start with 9, 8, 7, or 6");
+        alert("Invalid number start");
         return;
     }
 
-    // 🔥 QUANTITY VALIDATION
+    // 🔥 QUANTITY
     if (isNaN(qty) || qty < 5 || qty > 500) {
-        alert("Quantity must be between 5 and 500");
+        alert("Quantity must be 5–500");
         return;
     }
 
-    // 🔥 REQUIRED CHECK
-    if (!variety || !price || !location) {
-        alert("Please fill all fields properly");
+    if (!price || !location) {
+        alert("Fill all fields");
         return;
     }
 
-    // 🔥 CONFIRMATION
-    if (!confirm("Are you sure you want to place this order?")) return;
+    if (!confirm("Confirm order?")) return;
 
-    // 🔥 WHATSAPP MESSAGE
     let text =
         "🌴 Coconut Seedling Order\n\n" +
         "Name: " + name +
