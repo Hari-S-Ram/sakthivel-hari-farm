@@ -24,70 +24,6 @@
     <a href="https://wa.me/919360421569">
         <button class="btn btn-green">💬 WhatsApp</button>
     </a>
-
-    <div class="quick-links">
-    <span style="margin-right:6px;">👇 Click to navigate:</span>
-    <a href="#varieties">🌴 Varieties</a> |
-    <a href="#order">🛒 Order</a> |
-    <a href="#location">📍 Location</a>
-    </div>
-
-    <div class="scroll-down">⬇</div>
-</div>
-
-<!-- VARIETIES -->
-<div class="section" id="varieties">
-    <h2>Our Varieties</h2>
-    <p class="section-hint">Choose the best seedlings for your farm</p>
-
-    <div class="cards">
-
-        <!-- DWARF -->
-        <div class="card">
-            <div class="card-img">
-                <img src="dwarf.jpg">
-            </div>
-            <div class="card-content">
-                <h3>Dwarf</h3>
-                <p>Yield: Early bearing (3 years)</p>
-                <p>Height: 5–7 meters</p>
-                <p>Lifespan: 40–50 years</p>
-                <p>Best for: Quick income farming</p>
-                <p><b>Price: ₹150</b></p>
-            </div>
-        </div>
-
-        <!-- TALL -->
-        <div class="card">
-            <div class="card-img">
-                <img src="tall.jpg">
-            </div>
-            <div class="card-content">
-                <h3>Tall</h3>
-                <p>Yield: Long-term (8–10 years)</p>
-                <p>Height: 15–18 meters</p>
-                <p>Lifespan: 80–90 years</p>
-                <p>Best for: Strong & durable trees</p>
-                <p><b>Price: ₹120</b></p>
-            </div>
-        </div>
-
-        <!-- HYBRID -->
-        <div class="card">
-            <div class="card-img">
-                <img src="hybrid.jpg">
-            </div>
-            <div class="card-content">
-                <h3>Hybrid</h3>
-                <p>Yield: High (early + long life)</p>
-                <p>Best quality copra & oil</p>
-                <p>High productivity</p>
-                <p>Needs good care</p>
-                <p><b>Price: ₹180</b></p>
-            </div>
-        </div>
-
-    </div>
 </div>
 
 <!-- ORDER -->
@@ -104,17 +40,19 @@
         </select>
 
         <input type="text" id="name" placeholder="Name" required>
+
+        <!-- PHONE + OTP -->
         <input type="tel" id="phone" placeholder="Phone" required>
 
-<button type="button" onclick="sendOTP()">Send OTP</button>
+        <button type="button" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
 
-<div id="otpSection" style="display:none;">
-    <input type="text" id="otp" placeholder="Enter OTP"><br>
-    <p id="timer">05:00</p>
-    <button type="button" onclick="verifyOTP()">Verify OTP</button>
-</div>
+        <div id="otpSection" style="display:none;">
+            <input type="text" id="otp" placeholder="Enter OTP"><br>
+            <p id="timer">05:00</p>
+            <button type="button" onclick="verifyOTP()">Verify OTP</button>
+        </div>
 
-<div id="recaptcha-container"></div>
+        <div id="recaptcha-container"></div>
 
         <input type="number" id="qty" placeholder="Quantity"
         required oninput="calculatePrice()" min="5" max="500">
@@ -123,30 +61,123 @@
 
         <textarea id="location" placeholder="Enter your delivery location" required></textarea>
 
-        <button class="btn btn-green" type="submit">Place Order</button>
+        <button id="placeOrderBtn" class="btn btn-green" type="submit" disabled>
+            Place Order
+        </button>
 
     </form>
 </div>
 
-<!-- LOCATION -->
-<div class="section" id="location">
-    <h2>Our Location</h2>
-
-    <p>7R42+5J Sakthivel Hari garden🏡, Sengattampatti R.F., Tamil Nadu 624204</p>
-
-    <iframe 
-        src="https://www.google.com/maps?q=7R42+5J%20Sakthivel%20Hari%20Garden&output=embed"
-        width="100%" height="300" style="border-radius:10px; border:0;">
-    </iframe>
-</div>
-
-<div class="footer">
-    📞 9360421569 | Sakthivel Hari Farm
-</div>
-
-<a href="https://wa.me/919360421569" class="floating-btn">💬</a>
-
 <script src="script.js"></script>
+
+<!-- FIREBASE OTP -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD0rUbqm6Xe88d_YfYfskAYrjw4MlMYfH8",
+  authDomain: "sakthivel-hari-farm-direct.firebaseapp.com",
+  projectId: "sakthivel-hari-farm-direct",
+  appId: "1:939736601900:web:ba48af347a4c4e0b40c889"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+let confirmationResult;
+let timerInterval;
+window.otpVerified = false;
+
+// Recaptcha
+window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+    size: 'normal'
+});
+
+// SEND OTP
+window.sendOTP = function () {
+
+    let phone = document.getElementById("phone").value.trim();
+
+    if (phone.length !== 10) {
+        alert("Enter valid phone number");
+        return;
+    }
+
+    phone = "+91" + phone;
+
+    document.getElementById("sendOtpBtn").disabled = true;
+
+    signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
+        .then((result) => {
+
+            confirmationResult = result;
+
+            alert("OTP Sent (use 123456)");
+
+            document.getElementById("otpSection").style.display = "block";
+
+            startTimer(300);
+
+        })
+        .catch((error) => {
+            alert(error.message);
+            document.getElementById("sendOtpBtn").disabled = false;
+        });
+};
+
+// VERIFY OTP
+window.verifyOTP = function () {
+
+    let code = document.getElementById("otp").value;
+
+    confirmationResult.confirm(code)
+        .then(() => {
+
+            window.otpVerified = true;
+
+            clearInterval(timerInterval);
+
+            alert("OTP Verified ✅");
+
+            document.getElementById("placeOrderBtn").disabled = false;
+
+            // 🔒 Lock phone after verification
+            document.getElementById("phone").readOnly = true;
+
+        })
+        .catch(() => {
+            alert("Wrong OTP");
+        });
+};
+
+// TIMER
+function startTimer(seconds) {
+
+    let time = seconds;
+
+    timerInterval = setInterval(() => {
+
+        let min = Math.floor(time / 60);
+        let sec = time % 60;
+
+        document.getElementById("timer").innerText =
+            `${min}:${sec < 10 ? "0" + sec : sec}`;
+
+        time--;
+
+        if (time < 0) {
+            clearInterval(timerInterval);
+            alert("OTP expired");
+            document.getElementById("sendOtpBtn").disabled = false;
+        }
+
+    }, 1000);
+}
+
+</script>
 
 </body>
 </html>
